@@ -1,2 +1,4 @@
-# bluepatient.github.com
-root of blueButton initiative
+# bluePatient
+patient centric data aggregation
+<hr>
+live at [github](https://bluePatient.github.io).
