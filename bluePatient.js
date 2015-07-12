@@ -11,13 +11,37 @@ bp={
             setTimeout(function(){
                 msg.textContent+=xi
             },i*10)
-        })
-        4    
+        })  
     },
+
+    onSignInGoogle:function(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+    },
+
+
     
     loginGoogle:function(){//https://developers.google.com/identity/sign-in/web/devconsole-project
-        
+        /*gapi.load('auth2',function(){
+            console.log('google auth2 loaded')
+            var gu = gapi.auth2.getAuthInstance()
+            //gapi.auth2.init({
+            //    client_id: '4735868770-qubgnkvpa5qk4l4hn2t8b8bei4m2p9at.apps.googleusercontent.com'
+            //})
+            $('<div class="g-signin2" data-onsuccess="onSignIn" id="googleSignInButton"></div>').appendTo($('#bluePatientDiv'))
+            4
+        })
+        */
+        bp.auth2 = gapi.auth2.getAuthInstance()
+        bp.profile=bp.auth2.currentUser.get().getBasicProfile()
+        $('<img src="'+bp.profile.wc+'" height=34>').appendTo($('span',onSignInDiv)[2])
+        $('<div>... signed in Google as '+bp.profile.ha+' (<a href="https://plus.google.com/"'+bp.profile.B+' target=_blank>'+bp.profile.G+')</div>').appendTo(onSignInDiv)
+        bp.msg('... connected to your Google account as '+bp.profile.ha+' ('+bp.profile.B+'), connecting to your HEALTH DATA now ...')
     },
+
 
 
     addHAPI:function(){
@@ -60,17 +84,30 @@ bp={
 }
 
 
+
 // ini
-if(!localStorage.bluePatient){
-    bp.msg('... no login information found')
+bp.msg('Checking connection to your account in Google ...')
+
+
+if(false){//!localStorage.bluePatient){
+    bp.msg('... please connect to your HEALTH DATA')
     // add Human API to it
     setTimeout(function(){
         bp.addHAPI()
     },1000)
 }
 
+//bp.loginGoogle()
+/*
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+  console.log('Name: ' + profile.getName());
+  console.log('Image URL: ' + profile.getImageUrl());
+  console.log('Email: ' + profile.getEmail());
 
-
+}
+*/
 /*
 hAPI={
     dobra:function(x){
