@@ -1,4 +1,6 @@
 console.log('bluePatient loaded')
+// Ref
+// 1. Profile API: https://developers.google.com/identity/sign-in/web/people
 
 bp={
     msg:function(x,add){
@@ -39,7 +41,29 @@ bp={
         bp.profile=bp.auth2.currentUser.get().getBasicProfile()
         $('<img src="'+bp.profile.wc+'" height=34>').appendTo($('span',onSignInDiv)[2])
         $('<div>... signed in Google as '+bp.profile.ha+' (<a href="https://plus.google.com/"'+bp.profile.B+' target=_blank>'+bp.profile.G+')</div>').appendTo(onSignInDiv)
-        bp.msg('... connected to your Google account as '+bp.profile.ha+' ('+bp.profile.B+'), connecting to your HEALTH DATA now ...')
+        bp.msg('... connected to your Google account as '+bp.profile.ha+' ('+bp.profile.G+'), connecting to your HEALTH DATA now ...',true)
+        options = new gapi.auth2.SigninOptionsBuilder({'scope': 'https://www.googleapis.com/auth/fusiontables'})
+        googleUser = bp.auth2.currentUser.get()
+        googleUser.grant(options).then(
+            function(success){
+              bp.GoogleSuccess=success
+              bp.loginGoogleThen(success)
+              //console.log(JSON.stringify({message: "success", value: success}));
+            },
+            function(fail){
+              alert(JSON.stringify({message: "fail", value: fail}));
+        });
+
+        setTimeout(function(){
+          bp.addHAPI()
+        },1000)
+    },
+
+    loginGoogleThen:function(){
+      //bp.GoogleSuccess=success
+      var token = bp.GoogleSuccess.B.access_token
+      // load FT API and proceed
+      4
     },
 
 
@@ -88,12 +112,20 @@ bp={
 // ini
 
 // 1. checking https is being used
-
-
-bp.msg('Checking connection to your account in Google ...')
+bp.msg('waiting for connection to your Google account ...')
 if(document.location.href.match('http://bluepatient.github.io')){
   document.location.href='https'+document.location.href.slice(4)
 }
+
+// 2. Connect to G backend when available
+bp.t = setInterval(function(){
+  console.log(Date(),'checking connection to G backend')
+  if(gapi.auth2.getAuthInstance().isSignedIn.B){
+    clearInterval(bp.t)
+    bp.loginGoogle()
+  }
+},2000)
+
 
 if(false){//!localStorage.bluePatient){
     bp.msg('... please connect to your HEALTH DATA')
