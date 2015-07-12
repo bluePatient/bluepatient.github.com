@@ -86,8 +86,14 @@ bp={
 
 
 // ini
-bp.msg('Checking connection to your account in Google ...')
 
+// 1. checking https is being used
+
+
+bp.msg('Checking connection to your account in Google ...')
+if(document.location.href.match('http://bluepatient.github.io')){
+  document.location.href='https'+document.location.href.slice(4)
+}
 
 if(false){//!localStorage.bluePatient){
     bp.msg('... please connect to your HEALTH DATA')
