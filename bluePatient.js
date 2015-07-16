@@ -126,9 +126,9 @@ bp={
 
 // 1. checking https is being used
 bp.msg('waiting for connection to your Google account ...')
-if(document.location.href.match('http://bluepatient.github.io')){
-  document.location.href='https'+document.location.href.slice(4)
-}
+//if(document.location.href.match('http://bluepatient.github.io')){
+//  document.location.href='https'+document.location.href.slice(4)
+//}
 
 // 2. Connect to G backend when available
 bp.t = setInterval(function(){
