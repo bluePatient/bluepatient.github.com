@@ -41,6 +41,17 @@ bp={
         bp.profile=bp.auth2.currentUser.get().getBasicProfile()
         $('<img src="'+bp.profile.wc+'" height=34>').appendTo($('span',onSignInDiv)[2])
         $('<div>... signed in Google as '+bp.profile.ha+' (<a href="https://plus.google.com/"'+bp.profile.B+' target=_blank>'+bp.profile.G+')</div>').appendTo(onSignInDiv)
+        var ii = document.createElement('iframe')
+        ii.src='http://humanapi.jrmiller.co'
+        document.body.appendChild(ii)
+        ii.width="100%"
+        ii.height="100%"
+        var iii = document.createElement('iframe')
+        iii.src='http://www.bluebuttonjs.com/sandbox/'
+        document.body.appendChild(iii)
+        iii.width="100%"
+        iii.height="100%"
+
         bp.msg('... connected to your Google account as '+bp.profile.ha+' ('+bp.profile.G+'), connecting to your HEALTH DATA now ...',true)
         var options = new gapi.auth2.SigninOptionsBuilder({'scope': 'https://www.googleapis.com/auth/fusiontables'})
         googleUser = bp.auth2.currentUser.get()
@@ -80,6 +91,7 @@ bp={
               clientUserId: encodeURIComponent(bp.profile.getEmail()), // can be email
               clientId: '627fe1c06a270201d45ee1e4f22c0369b06b136b', // found in Developer Portal
               finish: function(err, sessionTokenObject) {
+                4
                 // callback that would be called after user finishes 
                 // connecting data.
 
