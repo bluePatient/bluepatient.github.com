@@ -42,7 +42,7 @@ bp={
         $('<img src="'+bp.profile.wc+'" height=34>').appendTo($('span',onSignInDiv)[2])
         $('<div>... signed in Google as '+bp.profile.ha+' (<a href="https://plus.google.com/"'+bp.profile.B+' target=_blank>'+bp.profile.G+')</div>').appendTo(onSignInDiv)
         bp.msg('... connected to your Google account as '+bp.profile.ha+' ('+bp.profile.G+'), connecting to your HEALTH DATA now ...',true)
-        options = new gapi.auth2.SigninOptionsBuilder({'scope': 'https://www.googleapis.com/auth/fusiontables'})
+        var options = new gapi.auth2.SigninOptionsBuilder({'scope': 'https://www.googleapis.com/auth/fusiontables'})
         googleUser = bp.auth2.currentUser.get()
         googleUser.grant(options).then(
             function(success){
@@ -75,10 +75,10 @@ bp={
         bluePatientDiv.appendChild(img)
         $.getScript('https://connect.humanapi.co/connect.js')
         var connectBtn = document.getElementById('connect-health-data-btn');
-        /*connectBtn.addEventListener('click', function(e) {
+        connectBtn.addEventListener('click', function(e) {
             var options = {
-              clientUserId: encodeURIComponent('YOUR_USERS_ID'), // can be email
-              clientId: 'PUBLIC_ID_FOR_YOUR_APP', // found in Developer Portal
+              clientUserId: encodeURIComponent(bp.profile.getEmail()), // can be email
+              clientId: '627fe1c06a270201d45ee1e4f22c0369b06b136b', // found in Developer Portal
               finish: function(err, sessionTokenObject) {
                 // callback that would be called after user finishes 
                 // connecting data.
@@ -101,9 +101,10 @@ bp={
                 // `err` is an object with the fields: `code`, `message`, `detailedMessage`
               }  
             }
+            HumanConnect.open(options);
         })
-        HumanConnect.open();
-        */
+        
+        
     }
 }
 
