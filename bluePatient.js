@@ -72,7 +72,7 @@ bp={
 
     loginGoogleThen:function(){
       //bp.GoogleSuccess=success
-      var token = bp.GoogleSuccess.B.access_token
+      bp.gToken = bp.GoogleSuccess.B.access_token
       // load FT API and proceed
       4
     },
@@ -99,13 +99,16 @@ bp={
                 // append `clientSecret` to it and send it to our server.
                 // sending POST request with jQuery might look like this.
                 // NOTE: it's not necessary to use jQuery
-                $.post('/your-server-connect-enpoint', sessionTokenObject, function(res){
+                localStorage.setItem('humanAPIsessionTokenObject',JSON.stringify(sessionTokenObject))
+                $.post('https://script.google.com/macros/s/AKfycbyrd7qAl9d-OQIx8UIn5djeB_E3R6W-mSkTOZMItImtZAWZb4fW/exec', sessionTokenObject, function(res){
+                  4
                 // handle server response here
                 });
               },
               close: function() {
                 // optional callback that will be called if the user 
                 // closes the popup without connecting any data sources.
+                4
               },
               error: function(err) {
                 // optional callback that will be called if an error occurs while 
@@ -117,6 +120,11 @@ bp={
         })
         
         
+    },
+    loginHAPI:function(){
+      var sessionTokenObject = JSON.parse(localStorage.getItem('humanAPIsessionTokenObject'))
+      4
+
     }
 }
 
@@ -126,9 +134,9 @@ bp={
 
 // 1. checking https is being used
 bp.msg('waiting for connection to your Google account ...')
-//if(document.location.href.match('http://bluepatient.github.io')){
-//  document.location.href='https'+document.location.href.slice(4)
-//}
+if(document.location.href.match('http://bluepatient.github.io')){
+  document.location.href='https'+document.location.href.slice(4)
+}
 
 // 2. Connect to G backend when available
 bp.t = setInterval(function(){
